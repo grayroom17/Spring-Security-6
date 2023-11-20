@@ -32,8 +32,16 @@ public class SecurityConfig {
         /**
          * Configuration to deny all the requests
          */
+//        http.authorizeHttpRequests(requests ->
+//                        requests.anyRequest().denyAll())
+//                .formLogin(withDefaults())
+//                .httpBasic(withDefaults());
+
+        /**
+         * Configuration to permit all the requests
+         */
         http.authorizeHttpRequests(requests ->
-                        requests.anyRequest().denyAll())
+                        requests.anyRequest().permitAll())
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults());
 
