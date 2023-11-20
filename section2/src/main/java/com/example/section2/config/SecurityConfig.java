@@ -16,18 +16,18 @@ public class SecurityConfig {
         /**
          * Below is the custom configurations
          */
-//        http.authorizeHttpRequests(requests ->
-//                        requests.requestMatchers(
-//                                        "/accounts/**",
-//                                        "/balance/**",
-//                                        "/loans/**",
-//                                        "/cards/**").authenticated()
-//                                .requestMatchers(
-//                                        "/contacts/**",
-//                                        "/notices/**"
-//                                ).permitAll())
-//                .formLogin(withDefaults())
-//                .httpBasic(withDefaults());
+        http.authorizeHttpRequests(requests ->
+                        requests.requestMatchers(
+                                        "/accounts/**",
+                                        "/balance/**",
+                                        "/loans/**",
+                                        "/cards/**").authenticated()
+                                .requestMatchers(
+                                        "/contacts/**",
+                                        "/notices/**"
+                                ).permitAll())
+                .formLogin(withDefaults())
+                .httpBasic(withDefaults());
 
         /**
          * Configuration to deny all the requests
@@ -40,10 +40,10 @@ public class SecurityConfig {
         /**
          * Configuration to permit all the requests
          */
-        http.authorizeHttpRequests(requests ->
-                        requests.anyRequest().permitAll())
-                .formLogin(withDefaults())
-                .httpBasic(withDefaults());
+//        http.authorizeHttpRequests(requests ->
+//                        requests.anyRequest().permitAll())
+//                .formLogin(withDefaults())
+//                .httpBasic(withDefaults());
 
         return http.build();
     }
