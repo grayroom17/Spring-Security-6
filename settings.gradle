@@ -2,3 +2,4 @@ rootProject.name = 'springsecurity6'
 
 include 'section1'
 include 'section2'
+include 'section3'
