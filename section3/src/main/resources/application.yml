@@ -6,6 +6,12 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
 
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
   liquibase:
     change-log: classpath:db/migration/changelog.yml
     default-schema: public
