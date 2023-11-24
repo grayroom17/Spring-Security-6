@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/migration/1_create_tables_for_user_details.sql
+  - include:
+      file: db/migration/2_create_customer_table.sql
