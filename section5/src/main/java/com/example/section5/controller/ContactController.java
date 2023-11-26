@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/contacts")
 public class ContactController {
 
-    @GetMapping("/contact")
+    @GetMapping
     public String getContacts() {
         return "Inquiry details are saved to the DB";
     }
