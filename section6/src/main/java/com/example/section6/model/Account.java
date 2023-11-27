@@ -1,7 +1,10 @@
 package com.example.section6.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -11,23 +14,17 @@ import java.sql.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 @Entity
-public class Customer {
+public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String name;
+    int customerId;
 
-    String email;
+    String accountType;
 
-    String mobileNumber;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    String pwd;
-
-    @Enumerated(EnumType.STRING)
-    Role role;
+    String branchAddress;
 
     Date createdAt;
 
