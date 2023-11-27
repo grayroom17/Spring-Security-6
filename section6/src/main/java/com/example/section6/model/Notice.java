@@ -1,6 +1,5 @@
 package com.example.section6.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -11,24 +10,23 @@ import java.sql.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 @Entity
-public class Customer {
+@Table(name = "notice_detail")
+public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String name;
+    String noticeSummary;
 
-    String email;
+    String noticeDetails;
 
-    String mobileNumber;
+    Date noticBegDt;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    String pwd;
-
-    @Enumerated(EnumType.STRING)
-    Role role;
+    Date noticEndDt;
 
     Date createdAt;
+
+    Date updatedAt;
 
 }

@@ -21,7 +21,8 @@ public class SecurityConfig {
                                         "/accounts/**",
                                         "/balance/**",
                                         "/loans/**",
-                                        "/cards/**").authenticated()
+                                        "/cards/**",
+                                        "/user").authenticated()
                                 .requestMatchers(
                                         "/contacts/**",
                                         "/notices/**",
