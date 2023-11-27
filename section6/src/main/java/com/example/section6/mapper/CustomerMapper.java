@@ -4,12 +4,16 @@ import com.example.section6.controller.dto.CustomerCreateDto;
 import com.example.section6.controller.dto.CustomerReadDto;
 import com.example.section6.model.Customer;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
-@Mapper(componentModel = SPRING)
+@Mapper(componentModel = SPRING, unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface CustomerMapper {
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     Customer fromCreateDto(CustomerCreateDto source);
 
     CustomerReadDto toReadDto(Customer source);
