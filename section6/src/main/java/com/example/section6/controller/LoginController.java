@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -33,9 +35,9 @@ public class LoginController {
 
         ResponseEntity response;
         try {
-            String hashPassword = passwordEncoder.encode(customer.getPwd());
-            customer.setPwd(hashPassword);
-
+            String hashPassword = passwordEncoder.encode(customer.getPassword());
+            customer.setPassword(hashPassword);
+            customer.setCreatedAt(Date.valueOf(LocalDate.now()));
             repository.save(customer);
             response = ResponseEntity
                     .status(HttpStatus.CREATED)

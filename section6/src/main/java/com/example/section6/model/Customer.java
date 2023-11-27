@@ -24,7 +24,8 @@ public class Customer {
     String mobileNumber;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    String pwd;
+    @Column(name = "pwd")
+    String password;
 
     @Enumerated(EnumType.STRING)
     Role role;

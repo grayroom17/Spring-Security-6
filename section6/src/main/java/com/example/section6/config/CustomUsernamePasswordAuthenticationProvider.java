@@ -33,7 +33,7 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
         List<Customer> customers = repository.findAllByEmail(username);
         if (!customers.isEmpty()) {
             Customer customer = customers.get(0);
-            if (passwordEncoder.matches(password, customer.getPwd())) {
+            if (passwordEncoder.matches(password, customer.getPassword())) {
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority(customer.getRole().toString()));
                 return new UsernamePasswordAuthenticationToken(username, password, authorities);
