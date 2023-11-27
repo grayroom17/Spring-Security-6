@@ -18,3 +18,7 @@ spring:
     change-log: classpath:db/migration/changelog.yml
     default-schema: public
 
+logging:
+  spring:
+    security: debug
+
