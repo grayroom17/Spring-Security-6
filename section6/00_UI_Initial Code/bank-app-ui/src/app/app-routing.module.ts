@@ -20,10 +20,10 @@ const routes: Routes = [
   { path: 'notices', component: NoticesComponent},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthActivateRouteGuard]},
   { path: 'logout', component: LogoutComponent},
-  { path: 'myAccount', component: AccountComponent, canActivate: [AuthActivateRouteGuard]},
-  { path: 'myBalance', component: BalanceComponent, canActivate: [AuthActivateRouteGuard]},
-  { path: 'myLoans', component: LoansComponent, canActivate: [AuthActivateRouteGuard]},
-  { path: 'myCards', component: CardsComponent, canActivate: [AuthActivateRouteGuard]}
+  { path: 'my-account', component: AccountComponent, canActivate: [AuthActivateRouteGuard]},
+  { path: 'my-balance', component: BalanceComponent, canActivate: [AuthActivateRouteGuard]},
+  { path: 'my-loans', component: LoansComponent, canActivate: [AuthActivateRouteGuard]},
+  { path: 'my-cards', component: CardsComponent, canActivate: [AuthActivateRouteGuard]}
 ];
 
 @NgModule({
