@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpInterceptor,HttpRequest,HttpHandler,HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpErrorResponse, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {tap} from 'rxjs/operators';
-import { User } from 'src/app/model/user.model';
+import {User} from 'src/app/model/user.model';
 
 @Injectable()
 export class XhrInterceptor implements HttpInterceptor {
@@ -17,6 +17,11 @@ export class XhrInterceptor implements HttpInterceptor {
     }
     if(this.user && this.user.password && this.user.email){
       httpHeaders = httpHeaders.append('Authorization', 'Basic ' + window.btoa(this.user.email + ':' + this.user.password));
+    }
+
+    let xsrf = sessionStorage.getItem('XSRF-TOKEN');
+    if (xsrf){
+      httpHeaders = httpHeaders.append('X-XSRF-TOKEN', xsrf)
     }
 
     httpHeaders = httpHeaders.append('X-Requested-With', 'XMLHttpRequest');
