@@ -52,7 +52,7 @@ public class LoginController {
 
     @RequestMapping("/user")
     public Customer getUserDetailsAfterLogin(Authentication authentication) {
-        List<Customer> customers = repository.findAllByEmail(authentication.getName());
+        List<Customer> customers = repository.findAllByEmailIgnoreCase(authentication.getName());
         if (!customers.isEmpty()) {
             return customers.get(0);
         } else {

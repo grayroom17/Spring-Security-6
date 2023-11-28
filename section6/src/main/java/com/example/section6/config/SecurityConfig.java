@@ -1,11 +1,16 @@
 package com.example.section6.config;
 
+import com.example.section6.filter.CsrfCookieFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
@@ -17,8 +22,12 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
+        requestHandler.setCsrfRequestAttributeName("_csrf"); //default value
 
         http
+                .securityContext(configurer -> configurer.requireExplicitSave(false))
+                .sessionManagement(configurer -> configurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .cors(configurer -> configurer.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(List.of("http://localhost:4200"));
@@ -28,10 +37,15 @@ public class SecurityConfig {
                     config.setMaxAge(3600L);
                     return config;
                 }))
-                .csrf(configurer -> configurer.ignoringRequestMatchers(
-                        "/contacts/**",
-                        "/register/**"
-                        ))
+                .csrf(configurer -> configurer
+                        .csrfTokenRequestHandler(requestHandler)
+                        .ignoringRequestMatchers(
+                                "/contacts/**",
+                                "/register/**"
+                        )
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                )
+                .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(requests ->
                         requests.requestMatchers(
                                         "/accounts/**",

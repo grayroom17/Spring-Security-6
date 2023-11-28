@@ -30,7 +30,7 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
-        List<Customer> customers = repository.findAllByEmail(username);
+        List<Customer> customers = repository.findAllByEmailIgnoreCase(username);
         if (!customers.isEmpty()) {
             Customer customer = customers.get(0);
             if (passwordEncoder.matches(password, customer.getPassword())) {
