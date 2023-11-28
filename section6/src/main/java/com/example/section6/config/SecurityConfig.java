@@ -28,6 +28,10 @@ public class SecurityConfig {
                     config.setMaxAge(3600L);
                     return config;
                 }))
+                .csrf(configurer -> configurer.ignoringRequestMatchers(
+                        "/contacts/**",
+                        "/register/**"
+                        ))
                 .authorizeHttpRequests(requests ->
                         requests.requestMatchers(
                                         "/accounts/**",
@@ -36,13 +40,12 @@ public class SecurityConfig {
                                         "/cards/**",
                                         "/user").authenticated()
                                 .requestMatchers(
-                                        "/contacts/contact",
+                                        "/contacts/**",
                                         "/notices/**",
                                         "/register/**"
                                 ).permitAll())
                 .formLogin(withDefaults())
-                .httpBasic(withDefaults())
-                .csrf(withDefaults());
+                .httpBasic(withDefaults());
 
         return http.build();
     }
