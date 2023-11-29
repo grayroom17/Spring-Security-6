@@ -47,10 +47,15 @@ public class SecurityConfig {
                 )
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(requests ->
-                        requests.requestMatchers("/accounts/**").hasAuthority("viewaccount")
-                                .requestMatchers("/balance/**").hasAnyAuthority("viewaccount", "viewbalance")
-                                .requestMatchers("/loans/**").hasAuthority("viewloans")
-                                .requestMatchers("/cards/**").hasAuthority("viewcards")
+                        requests
+//                              .requestMatchers("/accounts/**").hasAuthority("viewaccount")
+//                              .requestMatchers("/balance/**").hasAnyAuthority("viewaccount", "viewbalance")
+//                              .requestMatchers("/loans/**").hasAuthority("viewloans")
+//                              .requestMatchers("/cards/**").hasAuthority("viewcards")
+                                .requestMatchers("/accounts/**").hasRole("USER")
+                                .requestMatchers("/balance/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/loans/**").hasRole("USER")
+                                .requestMatchers("/cards/**").hasRole("USER")
                                 .requestMatchers("/user").authenticated()
                                 .requestMatchers(
                                         "/contacts/**",
