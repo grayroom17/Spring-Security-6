@@ -1,12 +1,13 @@
 package com.example.section7.controller.dto;
 
-import com.example.section7.model.Role;
+import java.util.Set;
 
 
 public record CustomerCreateDto(String name,
                                 String email,
                                 String mobileNumber,
                                 String password,
-                                Role role) {
+                                String role,
+                                Set<String> authorities) {
 
 }

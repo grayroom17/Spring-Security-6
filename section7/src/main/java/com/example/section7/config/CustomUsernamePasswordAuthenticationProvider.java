@@ -1,5 +1,6 @@
 package com.example.section7.config;
 
+import com.example.section7.model.Authority;
 import com.example.section7.model.Customer;
 import com.example.section7.repository.CustomerRepository;
 import lombok.AccessLevel;
@@ -15,8 +16,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
@@ -34,9 +35,7 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
         if (!customers.isEmpty()) {
             Customer customer = customers.get(0);
             if (passwordEncoder.matches(password, customer.getPassword())) {
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(customer.getRole().toString()));
-                return new UsernamePasswordAuthenticationToken(username, password, authorities);
+                return new UsernamePasswordAuthenticationToken(username, password, getGrantedAuthorities(customer.getAuthorities()));
             }
             throw new BadCredentialsException("Invalid password!");
         }
@@ -46,6 +45,12 @@ public class CustomUsernamePasswordAuthenticationProvider implements Authenticat
     @Override
     public boolean supports(Class<?> authentication) {
         return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(Set<Authority> authorities) {
+        return authorities.stream()
+                .map(authority -> (GrantedAuthority) new SimpleGrantedAuthority(authority.getName()))
+                .toList();
     }
 
 }

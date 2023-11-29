@@ -1,6 +1,7 @@
 package com.example.section7.controller;
 
 import com.example.section7.controller.dto.CustomerCreateDto;
+import com.example.section7.controller.dto.CustomerReadDto;
 import com.example.section7.mapper.CustomerMapper;
 import com.example.section7.model.Customer;
 import com.example.section7.repository.CustomerRepository;
@@ -51,10 +52,10 @@ public class LoginController {
     }
 
     @RequestMapping("/user")
-    public Customer getUserDetailsAfterLogin(Authentication authentication) {
+    public CustomerReadDto getUserDetailsAfterLogin(Authentication authentication) {
         List<Customer> customers = repository.findAllByEmailIgnoreCase(authentication.getName());
         if (!customers.isEmpty()) {
-            return customers.get(0);
+            return mapper.toReadDto(customers.get(0));
         } else {
             return null;
         }

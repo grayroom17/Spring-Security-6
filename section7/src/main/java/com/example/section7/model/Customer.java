@@ -4,9 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 import java.sql.Date;
+import java.util.Set;
+
+import static jakarta.persistence.FetchType.EAGER;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
@@ -31,5 +36,10 @@ public class Customer {
     Role role;
 
     Date createdAt;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "customer", fetch = EAGER)
+    Set<Authority> authorities;
 
 }
