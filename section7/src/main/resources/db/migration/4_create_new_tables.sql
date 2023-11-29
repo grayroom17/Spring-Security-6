@@ -14,7 +14,7 @@ create table if not exists customer
 
 --changeset grayroom:2
 insert into customer (name, email, mobile_number, pwd, role, created_at)
-values ('happy', 'happy@example.com', '9876548337', '$2y$12$orrbknfwur8ug4mlzh5foeui.//1mkd.rsoajmbyktsupvy.x/vb2',
+values ('happy', 'happy@example.com', '9876548337', '$2a$10$uJ02VKPNPc8yvvxJPZtmNe5Y6jipSihSQPkMAhoEuSI4IgpaynUJ.',
         'admin', now());
 
 --changeset grayroom:3
