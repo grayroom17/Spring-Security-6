@@ -47,12 +47,11 @@ public class SecurityConfig {
                 )
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(requests ->
-                        requests.requestMatchers(
-                                        "/accounts/**",
-                                        "/balance/**",
-                                        "/loans/**",
-                                        "/cards/**",
-                                        "/user").authenticated()
+                        requests.requestMatchers("/accounts/**").hasAuthority("viewaccount")
+                                .requestMatchers("/balance/**").hasAnyAuthority("viewaccount", "viewbalance")
+                                .requestMatchers("/loans/**").hasAuthority("viewloans")
+                                .requestMatchers("/cards/**").hasAuthority("viewcards")
+                                .requestMatchers("/user").authenticated()
                                 .requestMatchers(
                                         "/contacts/**",
                                         "/notices/**",
