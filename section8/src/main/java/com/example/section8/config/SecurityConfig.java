@@ -1,6 +1,7 @@
 package com.example.section8.config;
 
 import com.example.section8.filter.AuthoritiesLoggingAfterFilter;
+import com.example.section8.filter.AuthoritiesLoggingAtFilter;
 import com.example.section8.filter.CsrfCookieFilter;
 import com.example.section8.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
@@ -50,6 +51,7 @@ public class SecurityConfig {
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+                .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(requests ->
                         requests
                                 .requestMatchers("/accounts/**").hasRole("USER")
