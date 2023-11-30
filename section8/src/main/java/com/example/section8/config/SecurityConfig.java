@@ -1,6 +1,7 @@
 package com.example.section8.config;
 
 import com.example.section8.filter.CsrfCookieFilter;
+import com.example.section8.filter.RequestValidationBeforeFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,12 +47,9 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new RequestValidationBeforeFilter(),BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(requests ->
                         requests
-//                              .requestMatchers("/accounts/**").hasAuthority("viewaccount")
-//                              .requestMatchers("/balance/**").hasAnyAuthority("viewaccount", "viewbalance")
-//                              .requestMatchers("/loans/**").hasAuthority("viewloans")
-//                              .requestMatchers("/cards/**").hasAuthority("viewcards")
                                 .requestMatchers("/accounts/**").hasRole("USER")
                                 .requestMatchers("/balance/**").hasAnyRole("USER", "ADMIN")
                                 .requestMatchers("/loans/**").hasRole("USER")
