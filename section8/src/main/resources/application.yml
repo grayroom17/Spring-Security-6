@@ -18,3 +18,11 @@ spring:
     change-log: classpath:db/migration/changelog.yml
     default-schema: public
 
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          web:
+            FilterChainProxy: debug
+
