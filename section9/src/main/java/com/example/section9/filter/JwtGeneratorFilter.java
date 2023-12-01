@@ -19,10 +19,12 @@ import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.example.section9.constants.SecurityConstants.JWT_HEADER;
+import static com.example.section9.constants.SecurityConstants.JWT_KEY;
+
 public class JwtGeneratorFilter extends OncePerRequestFilter {
 
-    private static final String JWT_KEY = "jxgEQeXHuPq8VdbyYFNkANdudQ53YUn4";
-    private static final String JWT_HEADER = "Authorization";
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

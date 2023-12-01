@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
                 .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JwtGeneratorFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new JwtValidationFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(requests ->
                         requests
                                 .requestMatchers("/accounts/**").hasRole("USER")
