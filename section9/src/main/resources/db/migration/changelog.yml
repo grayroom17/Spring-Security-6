@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: db/migration/1_create_tables_for_user_details.sql
+  - include:
+      file: db/migration/2_create_customer_table.sql
+  - include:
+      file: db/migration/3_drop_old_tables.sql
+  - include:
+      file: db/migration/4_create_new_tables.sql
+  - include:
+      file: db/migration/5_create_authorities_table.sql
+  - include:
+      file: db/migration/6_clear_authorities_table_and_add_roles.sql
