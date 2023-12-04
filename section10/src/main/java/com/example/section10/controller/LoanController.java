@@ -5,6 +5,7 @@ import com.example.section10.repository.LoanRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ public class LoanController {
     LoanRepository loanRepository;
 
     @GetMapping("/my-loans")
+    @PostAuthorize("hasRole('USER')")
     public List<Loan> getLoanDetails(@RequestParam int id) {
         List<Loan> loans = loanRepository.findAllByCustomerIdOrderByStartedAtDesc(id);
         if (!loans.isEmpty()) {

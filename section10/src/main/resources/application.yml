@@ -22,7 +22,5 @@ logging:
   level:
     org:
       springframework:
-        security:
-          web:
-            FilterChainProxy: debug
+        security: debug
 
