@@ -64,7 +64,8 @@ public class SecurityConfig {
                                 .requestMatchers(
                                         "/contacts/**",
                                         "/notices/**",
-                                        "/register/**"
+                                        "/register/**",
+                                        "/error/**"
                                 ).permitAll())
                 .formLogin(withDefaults())
                 .httpBasic(withDefaults());
