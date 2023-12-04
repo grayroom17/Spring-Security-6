@@ -3,9 +3,9 @@ package com.example.section10.config;
 import com.example.section10.filter.CsrfCookieFilter;
 import com.example.section10.filter.JwtGeneratorFilter;
 import com.example.section10.filter.JwtValidationFilter;
-import com.example.section9.filter.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +21,7 @@ import java.util.List;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Bean
@@ -49,18 +50,17 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 )
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-//                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
-//                .addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
-//                .addFilterAt(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JwtGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JwtValidationFilter(), BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(requests ->
                         requests
                                 .requestMatchers("/accounts/**").hasRole("USER")
                                 .requestMatchers("/balance/**").hasAnyRole("USER", "ADMIN")
-                                .requestMatchers("/loans/**").hasRole("USER")
                                 .requestMatchers("/cards/**").hasRole("USER")
-                                .requestMatchers("/user").authenticated()
+                                .requestMatchers(
+                                        "/user",
+                                        "/loans/**"
+                                ).authenticated()
                                 .requestMatchers(
                                         "/contacts/**",
                                         "/notices/**",
