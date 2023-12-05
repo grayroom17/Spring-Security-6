@@ -5,7 +5,7 @@ import com.example.section10.repository.ContactRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.access.prepost.PreFilter;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +24,8 @@ public class ContactController {
     ContactRepository contactRepository;
 
     @PostMapping("/contact")
-    @PreFilter("filterObject.contactName != 'Test'")
+//    @PreFilter("filterObject.contactName != 'Test'")
+    @PostFilter("filterObject.contactName != 'Test'")
     public List<Contact> saveContactInquiryDetails(@RequestBody List<Contact> contacts) {
         Contact contact = contacts.getFirst();
         contact.setId(getServiceReqNumber());
