@@ -1,26 +1,10 @@
 spring:
 
-  datasource:
-    url: jdbc:postgresql://localhost:5432/eazybank
-    username: postgres
-    password: postgres
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-    hibernate:
-      ddl-auto: validate
-
-  liquibase:
-    change-log: classpath:db/migration/changelog.yml
-    default-schema: public
-
-logging:
-  level:
-    org:
-      springframework:
-        security: debug
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: 5689829c835a8cf30709
+            client-secret: d8f25d90398c85d4cd85ce90eca642a19a974b87
 
