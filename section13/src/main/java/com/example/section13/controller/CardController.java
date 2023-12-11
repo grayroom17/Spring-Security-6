@@ -1,7 +1,9 @@
 package com.example.section13.controller;
 
 import com.example.section13.model.Card;
+import com.example.section13.model.Customer;
 import com.example.section13.repository.CardRepository;
+import com.example.section13.repository.CustomerRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,15 +22,20 @@ import java.util.List;
 public class CardController {
 
     CardRepository cardRepository;
+    CustomerRepository customerRepository;
 
     @GetMapping("/my-cards")
-    public List<Card> getCardDetails(@RequestParam int id) {
-        List<Card> cards = cardRepository.findByCustomerId(id);
-        if (!cards.isEmpty()) {
-            return cards;
-        } else {
-            return Collections.emptyList();
+    public List<Card> getCardDetails(@RequestParam String email) {
+        List<Customer> customers = customerRepository.findAllByEmailIgnoreCase(email);
+        if (customers != null && !customers.isEmpty()) {
+            List<Card> cards = cardRepository.findByCustomerId(customers.getFirst().getId());
+            if (!cards.isEmpty()) {
+                return cards;
+            } else {
+                return Collections.emptyList();
+            }
         }
+        return null;
     }
 
 }

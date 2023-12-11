@@ -18,6 +18,12 @@ spring:
     change-log: classpath:db/migration/changelog.yml
     default-schema: public
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/EazyBank/protocol/openid-connect/certs
+
 logging:
   level:
     org:
