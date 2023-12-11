@@ -1,6 +1,8 @@
 package com.example.section13.controller;
 
+import com.example.section13.model.Customer;
 import com.example.section13.model.Transaction;
+import com.example.section13.repository.CustomerRepository;
 import com.example.section13.repository.TransactionRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +22,19 @@ import java.util.List;
 public class BalanceController {
 
     TransactionRepository transactionRepository;
+    CustomerRepository customerRepository;
 
     @GetMapping("/my-balance")
-    public List<Transaction> getBalanceDetails(@RequestParam int id) {
-        List<Transaction> transactions = transactionRepository.findAllByCustomerIdOrderByTransactionDateDesc(id);
-        if (!transactions.isEmpty()) {
-            return transactions;
-        } else {
-            return Collections.emptyList();
+    public List<Transaction> getBalanceDetails(@RequestParam String email) {
+        List<Customer> customers = customerRepository.findAllByEmailIgnoreCase(email);
+        if (customers != null && !customers.isEmpty()) {
+            List<Transaction> transactions = transactionRepository.findAllByCustomerIdOrderByTransactionDateDesc(customers.getFirst().getId());
+            if (!transactions.isEmpty()) {
+                return transactions;
+            } else {
+                return Collections.emptyList();
+            }
         }
+        return null;
     }
 }

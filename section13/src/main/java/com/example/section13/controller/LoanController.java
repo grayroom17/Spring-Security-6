@@ -1,6 +1,8 @@
 package com.example.section13.controller;
 
+import com.example.section13.model.Customer;
 import com.example.section13.model.Loan;
+import com.example.section13.repository.CustomerRepository;
 import com.example.section13.repository.LoanRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -21,16 +23,21 @@ import java.util.List;
 public class LoanController {
 
     LoanRepository loanRepository;
+    CustomerRepository customerRepository;
 
     @GetMapping("/my-loans")
     @PostAuthorize("hasRole('USER')")
-    public List<Loan> getLoanDetails(@RequestParam int id) {
-        List<Loan> loans = loanRepository.findAllByCustomerIdOrderByStartedAtDesc(id);
-        if (!loans.isEmpty()) {
-            return loans;
-        } else {
-            return Collections.emptyList();
+    public List<Loan> getLoanDetails(@RequestParam String email) {
+        List<Customer> customers = customerRepository.findAllByEmailIgnoreCase(email);
+        if (customers != null && !customers.isEmpty()) {
+            List<Loan> loans = loanRepository.findAllByCustomerIdOrderByStartedAtDesc(customers.getFirst().getId());
+            if (!loans.isEmpty()) {
+                return loans;
+            } else {
+                return Collections.emptyList();
+            }
         }
+        return null;
     }
 
 }
